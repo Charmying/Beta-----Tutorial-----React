@@ -1,0 +1,52 @@
+<!-- 改用 state 控制 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button type="button" id="like">喜歡</button>
+
+    <script>
+        let likeBtn = document.getElementById("like");
+
+        // 狀態
+        let state = {
+            like: false,
+            color: "red"
+        };
+
+        // 用函數修改狀態
+        let setstate = function(newState) {
+            state = {
+                // ... 是解構的意思
+                ...state,   // 解構出 like: false color: red
+                ...newState   // newState 賦予出 like: true
+                // 都有相同名為 like 的 key，所以新的 key 會把舊的 key 刪除掉，所以成功滿足更新了想更新的部分
+            }
+            render();
+        };
+
+        // 渲染
+        let render = function() {
+            if(state.like) {
+                // 喜歡的狀態
+                likeBtn.innerHTML = "已按讚"
+                likeBtn.style.color = "red";
+            } else {
+                // 不喜歡的狀態
+                likeBtn.innerHTML = "喜歡";
+                likeBtn.style.color = "black";
+            }
+        };
+
+        likeBtn.addEventListener("click", function() {
+            setstate({
+                like: !state.like
+            })
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!-- 限制字數 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="input">
+    <p id="error"> 字數不能超過 10 個字</p>
+    <button id="clearError">X</button>
+    
+    <script>
+        let input = document.getElementById("input");
+        let errorMsg = document.getElementById("error");
+
+        document.getElementById("clearError").addEventListener("click", function() {
+            setState({
+                error: false
+            });
+        });
+
+        let state = {
+            value: "",
+            error: false
+        };
+
+        let setState = function(newState) {
+            state = {
+                ...state,
+                ...newState
+            };
+            render();
+        };
+
+        let render = function () {
+            input.value = state.value;
+            if(state.error) {
+                errorMsg.style.display = "block"
+            } else {
+                errorMsg.style.display = "none"
+            };
+        };
+
+        let handleInput = function(value) {
+            if(value.length < 10) {
+                setState({
+                    value: value
+                })
+            } else {
+                setState({
+                    error: true
+                })
+            }
+        };
+
+        input.addEventListener("input", function () {
+            handleInput(this.value);
+        });
+
+        render();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!-- 對模式進行一種組件式的包裝 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        let root = document.getElementById("root");
+
+        // 設置一個 component 提供繼承
+        class Component {
+            setState(newState) {
+                this.state = {
+                    ...this.state,
+                    ...newState
+                };
+                this.render();
+            };
+        };
+
+        // Button 實體化，只要 new 就會有了
+        class Button extends Component {
+            constructor() {
+                super();   // 表示繼承
+                this.state = {
+                    like: true
+                };
+                this.render();
+            };
+
+            render() {
+                const state = this.state;
+                return `
+                    <button type="button" style="color: ${state.like ? "red" : "black"};">
+                        ${state.like ? "已按讚" : "喜歡"}
+                    </button>
+                `;
+            };
+        };
+
+        class Title extends Component {
+            constructor() {
+                super();   // 表示繼承
+                this.state = {
+                    text: "這裡是標題"
+                };
+            };
+
+            render() {
+                return `<h1>${this.state.text}</h1>`
+            }
+        };
+
+        class Wrap {
+            constructor() {};
+
+            render() {
+                return `
+                    wrap
+                    ${new Title().render()}
+                    ${new Title().render()}
+                    ${new Title().render()}
+                    ${new Title().render()}
+                    ${new Title().render()}
+                    ${new Title().render()}
+                    ${new Button().render()}
+                `
+                // return 後面不能換行
+            };
+        };
+
+        root.innerHTML = new Wrap().render();
+    </script>
+</body>
+</html>

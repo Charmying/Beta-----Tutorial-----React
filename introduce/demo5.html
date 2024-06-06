@@ -1,0 +1,46 @@
+<!-- 更加接近 React 的開發模式 -->
+<!-- 沒有 HTML，純 JS 完成應用開發 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script>
+        let root = document.getElementById("root");
+
+        let state = {
+            like: false
+        };
+
+        let setState = function(newState) {
+            state = {
+                ...state,
+                ...newState
+            };
+            render();
+        };
+
+        let handleClick = function() {
+            setState({
+                like: !state.like
+            });
+        };
+
+        let render = function() {
+            root.innerHTML = 
+            `
+                <button type="button" style="color: ${state.like ? "red" : "black"};" onclick="handleClick()">
+                    ${state.like ? "已按讚" : "喜歡"}
+                </button>
+            `;
+        };
+
+        render();
+    </script>
+</body>
+</html>

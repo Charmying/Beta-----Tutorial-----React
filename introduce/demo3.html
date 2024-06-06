@@ -1,0 +1,42 @@
+<!-- 連動 input 的 value 和 state 的 value -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="input">
+
+    <script>
+        let input = document.getElementById("input");
+
+        let state = {
+            value: ""
+        };
+
+        let setstate = function(newState) {
+            state = {
+                ...state,
+                ...newState
+            };
+            render();
+        };
+
+        let render = function() {
+            // input.value = ""   // 不管怎麼輸入都是空的
+            input.value = state.value;   // 確保輸入的內容
+        };
+
+        input.addEventListener("input", function () {
+            setstate({
+                value: this.value
+            });
+        });
+    </script>
+</body>
+
+</html>
